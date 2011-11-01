@@ -71,8 +71,7 @@ class DataStorage
     typedef std::list<char*> StringPoolList;
     typedef std::vector<T*> DataTableEx;
     public:
-        explicit DataStorage(const char *f) :
-            fmt(f), nCount(0), fieldCount(0), dataTable(NULL)
+        explicit DataStorage(const char *f) : fmt(f), nCount(0), fieldCount(0), dataTable(NULL)
         {
             indexTable.asT = NULL;
         }
@@ -83,7 +82,7 @@ class DataStorage
         {
             return (id >= nCount) ? NULL : indexTable.asT[id];
         }
-        uint32  GetNumRows() const { return nCount; }
+        uint32 GetNumRows() const { return nCount; }
         char const* GetFormat() const { return fmt; }
         uint32 GetFieldCount() const { return fieldCount; }
 
@@ -91,7 +90,7 @@ class DataStorage
         {
             StorageLoader dbc;
             // Check if load was successful, only then continue
-            if (!dbc.LoadDBCStorage(fn, fmt) && !dbc.LoadDB2Storage(fn, fmt))
+            if (!dbc.LoadDBCStorage(fn, fmt) || !dbc.LoadDB2Storage(fn, fmt))
                 return false;
 
             uint32 sqlRecordCount = 0;
@@ -231,7 +230,8 @@ class DataStorage
 
                         fields = NULL;
                         ++rowIndex;
-                    }while (result->NextRow());
+                    }
+                    while (result->NextRow());
                 }
             }
 
