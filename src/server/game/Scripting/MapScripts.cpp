@@ -325,7 +325,14 @@ void Map::ScriptsProcess()
                     source = HashMapHolder<Corpse>::Find(step.sourceGUID);
                     break;
                 case HIGHGUID_MO_TRANSPORT:
-                    source = sTransportMgr->GetTransport(step.sourceGUID);
+                    for (MapManager::TransportSet::iterator iter = sMapMgr->m_Transports.begin(); iter != sMapMgr->m_Transports.end(); ++iter)
+                    {
+                        if ((*iter)->GetGUID() == step.sourceGUID)
+                        {
+                            source = *iter;
+                            break;
+                        }
+                    }
                     break;
                 default:
                     sLog->outError("%s source with unsupported high guid (GUID: " UI64FMTD ", high guid: %u).",

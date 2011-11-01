@@ -31,6 +31,7 @@
 #include "MapUpdater.h"
 
 class Transport;
+struct TransportCreatureProto;
 
 class MapManager
 {
@@ -122,6 +123,15 @@ class MapManager
         }
 
         void DoDelayedMovesAndRemoves();
+
+        void LoadTransports();
+        void LoadTransportNPCs();
+
+        typedef std::set<Transport *> TransportSet;
+        TransportSet m_Transports;
+
+        typedef std::map<uint32, TransportSet> TransportMap;
+        TransportMap m_TransportsByMap;
 
         bool CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck = false);
         void InitializeVisibilityDistanceInfo();

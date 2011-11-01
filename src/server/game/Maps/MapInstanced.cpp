@@ -27,7 +27,6 @@
 #include "InstanceSaveMgr.h"
 #include "World.h"
 #include "Group.h"
-#include "TransportMgr.h"
 
 MapInstanced::MapInstanced(uint32 id, time_t expiry) : Map(id, expiry, 0, DUNGEON_DIFFICULTY_NORMAL)
 {
@@ -172,9 +171,6 @@ Map* MapInstanced::CreateInstance(const uint32 mapId, Player* player)
         }
     }
 
-    // create transports
-    sTransportMgr->CreateInstanceTransports(map);
-
     return map;
 }
 
@@ -247,7 +243,6 @@ bool MapInstanced::DestroyInstance(InstancedMaps::iterator &itr)
         return false;
     }
 
-    sTransportMgr->RemoveTransportsFromMap(itr->second);
     itr->second->UnloadAll();
     // should only unload VMaps if this is the last instance and grid unloading is enabled
     if (m_InstancedMaps.size() <= 1 && sWorld->getBoolConfig(CONFIG_GRID_UNLOAD))
