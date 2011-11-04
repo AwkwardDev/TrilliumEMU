@@ -18,3 +18,6 @@ What need to merged:
 1. Merge Trinity to last Head (Venugh does this).
 
 If you Fix anything from this List, remove it.
+
+
+### Needs more developers ###
